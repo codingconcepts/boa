@@ -1,0 +1,13 @@
+name: boa
+version: 0.1.0
+
+authors:
+  - codingconcepts <bassrob@gmail.com>
+
+targets:
+  boa:
+    main: src/boa.cr
+
+crystal: 0.25.0
+
+license: MIT
