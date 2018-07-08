@@ -41,16 +41,12 @@ def command(path : String, &block : Array(String) -> _)
   Boa::PathHandler::INSTANCE.add_path(path, &block)
 end
 
-command "a" do |args|
-  puts "doing a with #{args}"
+command "build" do |args|
+  puts "running build with #{args}"
 end
 
-command "b" do |args|
-  puts "doing b with #{args}"
-end
-
-command "c" do |args|
-  puts "doing c with #{args}"
+command "tool" do |args|
+  puts "running tool with #{args}"
 end
 
 Boa.run
