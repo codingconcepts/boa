@@ -11,14 +11,16 @@ module Boa
     property paths
 
     def initialize
-      @paths = {} of String => Route #Proc(Array(String), Void)
+      @paths = {} of String => Route
     end
 
     def add_path(path : String, &block : Array(String) -> _)
+      puts "add_path #{path}"
       @paths[path] = Route.new(path, &block)
     end
 
     def lookup_path(path : String)
+      puts "lookup_path #{path}"
       @paths[path]
     end
   end
@@ -33,7 +35,6 @@ module Boa
       end
     end
   end
-
 end
 
 def command(path : String, &block : Array(String) -> _)
@@ -41,15 +42,15 @@ def command(path : String, &block : Array(String) -> _)
 end
 
 command "a" do |args|
-  puts "doing a"
+  puts "doing a with #{args}"
 end
 
 command "b" do |args|
-  puts "doing b"
+  puts "doing b with #{args}"
 end
 
 command "c" do |args|
-  puts "doing c"
+  puts "doing c with #{args}"
 end
 
 Boa.run
