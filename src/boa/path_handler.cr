@@ -7,7 +7,7 @@ module Boa
 			@paths = {} of String => Path
 		end
 
-		def add_path(path : String, &block : Array(String) -> _)
+		def add_path(path : String, &block : Hash(String, String) -> _)
 			@paths[path] = Path.new(path, &block)
 		end
 
