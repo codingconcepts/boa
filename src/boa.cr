@@ -1,11 +1,21 @@
 require "./boa/*"
+require "levenshtein"
 
 module Boa
   def self.run
-    route, args = PathHandler::INSTANCE.lookup_path ARGV
-    route.handler.call(args)
+    begin
+      route, args = PathHandler::INSTANCE.lookup_path ARGV
+      route.handler.call(args)
+    rescue ex : NoMatchException
+      print ex.message
+    end
   end
 
+  # TODO: Move into exceptions file.
+  class NoMatchException < Exception
+  end
+
+  # TODO: Move into path_handler file.
   class PathHandler
     INSTANCE = new
     property paths
@@ -15,7 +25,6 @@ module Boa
     end
 
     def add_path(path : String, &block : Array(String) -> _)
-      puts "add_path #{path}"
       @paths[path] = Route.new(path, &block)
     end
 
@@ -25,13 +34,20 @@ module Boa
     # @paths.keys = ["build", "build stuff"]
     # argv        = ["build", "stuff"]
     def lookup_path(argv) : {Route, Array(String)}
+      distances = {} of Int32 => String
+
       @paths.keys.sort_by { |k| k.size }.reverse.each do |k|
         key_parts = k.split(" ")
         arg_parts = argv.first(key_parts.size)
         return @paths[k], argv.skip(arg_parts.size) if key_parts == arg_parts
+
+        d = Levenshtein.distance(k, arg_parts.join(" "))
+		    distances[d] = k unless distances.has_key?(d)
       end
 
-      raise "no route found"
+      # We didn't find a matching route, use Levenshtein distance to
+      # find the next most suitable match and return it as an error.
+      raise NoMatchException.new("Did you mean '#{distances[distances.keys.sort.first()]}'?\n")
     end
   end
 
