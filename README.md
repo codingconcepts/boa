@@ -2,6 +2,10 @@
 
 TODO: Write a description here
 
+## Todos
+
+* Pass a Hash(String, String) to block call instead of Array(String).
+
 ## Installation
 
 TODO: Write installation instructions here
