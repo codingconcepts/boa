@@ -2,8 +2,8 @@ require "./boa/*"
 
 module Boa
   def self.run
-    block = PathHandler::INSTANCE.lookup_path ARGV.join(" ")
-    block.handler.call(["hello", "there"])
+    route, args = PathHandler::INSTANCE.lookup_path ARGV
+    route.handler.call(args)
   end
 
   class PathHandler
@@ -19,9 +19,19 @@ module Boa
       @paths[path] = Route.new(path, &block)
     end
 
-    def lookup_path(path : String)
-      puts "lookup_path #{path}"
-      @paths[path]
+    # Finds the best match in a Hash for an array of strings, the
+    # best match being the longest key found.
+    # For example, the following would return the value at @paths["build stuff"]
+    # @paths.keys = ["build", "build stuff"]
+    # argv        = ["build", "stuff"]
+    def lookup_path(argv) : {Route, Array(String)}
+      @paths.keys.sort_by { |k| k.size }.reverse.each do |k|
+        key_parts = k.split(" ")
+        arg_parts = argv.first(key_parts.size)
+        return @paths[k], argv.skip(arg_parts.size) if key_parts == arg_parts
+      end
+
+      raise "no route found"
     end
   end
 
