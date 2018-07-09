@@ -6,9 +6,17 @@ module Boa
     begin
       route, args = PathHandler::INSTANCE.lookup_path ARGV
       route.handler.call(args)
+    rescue ex : BestMatchException
+      print ex.message
+      exit 1
     rescue ex : NoMatchException
       print ex.message
+      exit 1
     end
+  end
+
+  # TODO: Move into exceptions file.
+  class BestMatchException < Exception
   end
 
   # TODO: Move into exceptions file.
@@ -47,7 +55,9 @@ module Boa
 
       # We didn't find a matching route, use Levenshtein distance to
       # find the next most suitable match and return it as an error.
-      raise NoMatchException.new("Did you mean '#{distances[distances.keys.sort.first()]}'?\n")
+      best = distances.keys.sort.first()
+      raise BestMatchException.new("Did you mean '#{distances[best]}'?\n") unless best > 3
+      raise NoMatchException.new("No matches found.\n")
     end
   end
 
