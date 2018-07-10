@@ -13,7 +13,25 @@ TODO: Write installation instructions here
 
 ## Usage
 
-TODO: Write usage instructions here
+``` crystal
+command "build" do |args|
+  # Access args as {} of String => String
+end
+
+command "tool" do |args|
+  # Access args as {} of String => String
+end
+
+command "tool format" do |args|
+	# Access args as {} of String => String
+end
+
+Boa.run
+```
+
+``` bash
+$ ./your_app -a=1 -b 2 --c=3 --d 4 --e-e 5 --f-f=6 -g --h --i-i
+```
 
 ## Development
 

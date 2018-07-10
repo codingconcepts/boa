@@ -18,17 +18,3 @@ module Boa
     end
   end
 end
-
-command "build" do |args|
-  puts "running build with #{args}"
-end
-
-command "tool" do |args|
-  puts "running tool with #{args}"
-end
-
-command "tool format" do |args|
-  puts "running tool > format with #{args}"
-end
-
-Boa.run
