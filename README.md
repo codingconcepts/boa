@@ -1,6 +1,6 @@
 # boa
 
-TODO: Write a description here
+Boa makes creating elegant CLIs like Docker and Kubernetes a doddle.  Simply express your sub-commands as blocks and have console arguments served up as `Hash(String, String)`.
 
 ## Todos
 
