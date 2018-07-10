@@ -1,7 +1,7 @@
 module Boa
-	class BestMatchException < Exception
-	end
+  class BestMatchException < Exception
+  end
 
-	class NoMatchException < Exception
-	end
+  class NoMatchException < Exception
+  end
 end
