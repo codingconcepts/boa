@@ -9,33 +9,39 @@ TODO: Write a description here
 
 ## Installation
 
-TODO: Write installation instructions here
+``` yaml
+dependencies:
+  boa:
+    github: codingconcepts/boa
+```
 
 ## Usage
 
-``` crystal
+``` ruby
+require "boa"
+
+# Matches ./your_app build <ARGS>
 command "build" do |args|
-  # Access args as {} of String => String
+  print "build", args, "\n"
 end
 
+# Matches ./your_app tool <ARGS>
 command "tool" do |args|
-  # Access args as {} of String => String
+  print "tool", args, "\n"
 end
 
+# Matches ./your_app tool format <ARGS>
 command "tool format" do |args|
-	# Access args as {} of String => String
+	print "tool format", args, "\n"
 end
 
 Boa.run
 ```
 
-``` bash
-$ ./your_app -a=1 -b 2 --c=3 --d 4 --e-e 5 --f-f=6 -g --h --i-i
 ```
-
-## Development
-
-TODO: Write development instructions here
+$ ./your_app tool format -a=1 -b 2 --c=3 --d 4 --e-e 5 --f-f=6 -g --h --i-i
+tool format{"a" => "1", "b" => "2", "c" => "3", "d" => "4", "e-e" => "5", "f-f" => "6", "g" => "true", "h" => "true", "i-i" => "true"}
+```
 
 ## Contributing
 
@@ -47,4 +53,4 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [your-github-user](https://github.com/your-github-user) codingconcepts - creator, maintainer
+- [codingconcepts](https://github.com/codingconcepts) codingconcepts - creator, maintainer
